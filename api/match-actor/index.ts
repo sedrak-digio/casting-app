@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { GeminiService } from "../utils/geminiService";
+import { AIService } from "../utils/aiService";
 
 interface MatchActorRequest {
     characterDescription: string;
@@ -37,8 +37,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
         context.log(`Analyzing character: ${characterDescription.substring(0, 100)}...`);
 
-        // Initialize Gemini service
-        const geminiService = new GeminiService();
+        // Initialize AI service
+        const aiService = new AIService();
 
         // Create the prompt for actor matching
         const systemInstruction = `You are an expert casting director with deep knowledge of actors, their performances, and their suitability for different roles.
@@ -66,8 +66,8 @@ ${characterDescription}
 
 Return ONLY the JSON array, no additional text.`;
 
-        // Call Gemini API
-        const response = await geminiService.generateContent(prompt, systemInstruction);
+        // Call AI API
+        const response = await aiService.generateContent(prompt, systemInstruction);
 
         // Parse the response
         let actors: ActorMatch[];
@@ -80,7 +80,7 @@ Return ONLY the JSON array, no additional text.`;
                 throw new Error('No JSON array found in response');
             }
         } catch (parseError) {
-            context.log.error('Failed to parse Gemini response:', parseError);
+            context.log.error('Failed to parse AI response:', parseError);
             context.log.error('Raw response:', response);
 
             // Fallback response
