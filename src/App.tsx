@@ -8,7 +8,9 @@ import {
   Text,
   Textarea,
   Title,
-  Paper
+  Paper,
+  List,
+  Divider
 } from "@mantine/core";
 import { theme } from "./theme";
 import { useState } from "react";
@@ -81,11 +83,36 @@ export default function App() {
             </Stack>
           </Paper>
 
-          {result && (
-            <Paper shadow="sm" p="md" radius="md" withBorder>
-              <Text fw={500}>Results:</Text>
-              <Text mt="sm">{JSON.stringify(result, null, 2)}</Text>
-            </Paper>
+          {result && result.recommendations && (
+            <Stack gap="md">
+              <Title order={2}>Recommended Actors</Title>
+
+              {result.recommendations.map((actor: any, index: number) => (
+                <Paper key={index} shadow="sm" p="lg" radius="md" withBorder>
+                  <Stack gap="md">
+                    <Title order={3}>{actor.name}</Title>
+
+                    <Divider />
+
+                    <div>
+                      <Text fw={500} size="sm" mb="xs">Why this actor?</Text>
+                      <Text size="sm">{actor.reasoning}</Text>
+                    </div>
+
+                    {actor.notableRoles && actor.notableRoles.length > 0 && (
+                      <div>
+                        <Text fw={500} size="sm" mb="xs">Notable Roles</Text>
+                        <List size="sm">
+                          {actor.notableRoles.map((role: string, i: number) => (
+                            <List.Item key={i}>{role}</List.Item>
+                          ))}
+                        </List>
+                      </div>
+                    )}
+                  </Stack>
+                </Paper>
+              ))}
+            </Stack>
           )}
         </Stack>
       </Container>
