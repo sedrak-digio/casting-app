@@ -10,7 +10,10 @@ import {
   Title,
   Paper,
   List,
-  Divider
+  Divider,
+  Avatar,
+  Group,
+  Anchor
 } from "@mantine/core";
 import { theme } from "./theme";
 import { useState } from "react";
@@ -90,7 +93,26 @@ export default function App() {
               {result.recommendations.map((actor: any, index: number) => (
                 <Paper key={index} shadow="sm" p="lg" radius="md" withBorder>
                   <Stack gap="md">
-                    <Title order={3}>{actor.name}</Title>
+                    <Group gap="md" align="flex-start">
+                      <Avatar
+                        src={actor.photoUrl}
+                        size="lg"
+                        radius="md"
+                      />
+                      <div style={{ flex: 1 }}>
+                        <Title order={3}>{actor.name}</Title>
+                        {actor.imdbUrl && (
+                          <Anchor
+                            href={actor.imdbUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            size="sm"
+                          >
+                            View IMDB Profile
+                          </Anchor>
+                        )}
+                      </div>
+                    </Group>
 
                     <Divider />
 

@@ -9,6 +9,8 @@ interface ActorMatch {
     name: string;
     reasoning: string;
     notableRoles?: string[];
+    photoUrl?: string;
+    imdbUrl?: string;
 }
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
@@ -48,16 +50,21 @@ For each actor, provide:
 1. Their full name
 2. A detailed explanation of why they'd be perfect for this role (consider their acting style, previous roles, range, and characteristics)
 3. 2-3 notable roles that demonstrate their suitability
+4. Their IMDB profile URL (if you know it, otherwise omit this field)
+5. A photo URL of the actor (if you know it, otherwise omit this field)
 
 Return your response as a JSON array with this exact structure:
 [
   {
     "name": "Actor Name",
     "reasoning": "Detailed explanation of why they fit...",
-    "notableRoles": ["Role 1 in Movie/Show", "Role 2 in Movie/Show"]
+    "notableRoles": ["Role 1 in Movie/Show", "Role 2 in Movie/Show"],
+    "imdbUrl": "https://www.imdb.com/name/nm1234567/",
+    "photoUrl": "https://example.com/photo.jpg"
   }
 ]
 
+Note: If you don't know the IMDB URL or photo URL for an actor, simply omit those fields from the response.
 Be specific, insightful, and consider both obvious and surprising choices that would truly fit the character.`;
 
         const prompt = `Based on this character description, recommend 3 actors who would be perfect for the role:
