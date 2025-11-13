@@ -13,7 +13,9 @@ import {
   Divider,
   Avatar,
   Group,
-  Anchor
+  Anchor,
+  Tooltip,
+  Badge
 } from "@mantine/core";
 import { theme } from "./theme";
 import { useState } from "react";
@@ -102,14 +104,21 @@ export default function App() {
                       <div style={{ flex: 1 }}>
                         <Title order={3}>{actor.name}</Title>
                         {actor.imdbUrl && (
-                          <Anchor
-                            href={actor.imdbUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            size="sm"
-                          >
-                            View IMDB Profile
-                          </Anchor>
+                          <Group gap="xs">
+                            <Anchor
+                              href={actor.imdbUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              size="sm"
+                            >
+                              View IMDB Profile
+                            </Anchor>
+                            <Tooltip label="Photos and IMDB links are AI-generated and may not be accurate" withArrow>
+                              <Badge size="xs" variant="light" color="yellow">
+                                Beta
+                              </Badge>
+                            </Tooltip>
+                          </Group>
                         )}
                       </div>
                     </Group>
